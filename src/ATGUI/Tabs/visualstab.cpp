@@ -100,6 +100,7 @@ void Visuals::RenderTab()
 				ImGui::ItemSize(ImVec2(0.0f, 0.0f), 0.0f);
 				ImGui::Checkbox(XORSTR("Bullet Tracers"), &Settings::ESP::BulletTracers::enabled);
 				ImGui::Checkbox(XORSTR("Head Dot"), &Settings::ESP::HeadDot::enabled);
+				ImGui::Checkbox(XORSTR("backtrack"), &Settings::ESP::backtrack::enabled);
 			}
 			ImGui::NextColumn();
 			{

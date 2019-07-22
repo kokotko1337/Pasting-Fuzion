@@ -223,15 +223,20 @@ void Settings::LoadDefaultsOrSave(std::string path)
 	settings[XORSTR("AntiAim")][XORSTR("AutoDisable")][XORSTR("knife_held")] = Settings::AntiAim::AutoDisable::knifeHeld;
 	settings[XORSTR("AntiAim")][XORSTR("Yaw")][XORSTR("enabled")] = Settings::AntiAim::Yaw::enabled;
 	settings[XORSTR("AntiAim")][XORSTR("Yaw")][XORSTR("type")] = (int) Settings::AntiAim::Yaw::type;
-	settings[XORSTR("AntiAim")][XORSTR("Yaw")][XORSTR("type_fake")] = (int) Settings::AntiAim::Yaw::typeFake;
+	settings[XORSTR("AntiAim")][XORSTR("Yaw")][XORSTR("offset")] = Settings::AntiAim::Yaw::offset;
+	settings[XORSTR("AntiAim")][XORSTR("Fake")][XORSTR("enabled")] = Settings::AntiAim::Fake::enabled;
+	settings[XORSTR("AntiAim")][XORSTR("Fake")][XORSTR("type")] = (int) Settings::AntiAim::Fake::type;
+	settings[XORSTR("AntiAim")][XORSTR("RageDesyncFix")][XORSTR("enabled")] = Settings::AntiAim::RageDesyncFix::enabled;
 	settings[XORSTR("AntiAim")][XORSTR("Pitch")][XORSTR("enabled")] = Settings::AntiAim::Pitch::enabled;
 	settings[XORSTR("AntiAim")][XORSTR("Pitch")][XORSTR("type")] = (int) Settings::AntiAim::Pitch::type;
 	settings[XORSTR("AntiAim")][XORSTR("HeadEdge")][XORSTR("enabled")] = Settings::AntiAim::HeadEdge::enabled;
-	settings[XORSTR("AntiAim")][XORSTR("HeadEdge")][XORSTR("distance")] = Settings::AntiAim::HeadEdge::distance;
 	settings[XORSTR("AntiAim")][XORSTR("LBYBreaker")][XORSTR("enabled")] = Settings::AntiAim::LBYBreaker::enabled;
 	settings[XORSTR("AntiAim")][XORSTR("LBYBreaker")][XORSTR("offset")] = Settings::AntiAim::LBYBreaker::offset;
+	settings[XORSTR("AntiAim")][XORSTR("LBYBreaker")][XORSTR("manual")] = Settings::AntiAim::LBYBreaker::manual;
 
 	settings[XORSTR("Resolver")][XORSTR("resolve_all")] = Settings::Resolver::resolveAll;
+
+    settings[XORSTR("AngleIndicator")][XORSTR("enabled")] = Settings::AngleIndicator::enabled;
 
 	settings[XORSTR("Triggerbot")][XORSTR("enabled")] = Settings::Triggerbot::enabled;
 	settings[XORSTR("Triggerbot")][XORSTR("key")] = Util::GetButtonName(Settings::Triggerbot::key);
@@ -358,6 +363,7 @@ void Settings::LoadDefaultsOrSave(std::string path)
 	settings[XORSTR("ESP")][XORSTR("Hitmarker")][XORSTR("Sounds")][XORSTR("enabled")] = Settings::ESP::Hitmarker::Sounds::enabled;
 	settings[XORSTR("ESP")][XORSTR("Hitmarker")][XORSTR("Sounds")][XORSTR("sound")] = (int)Settings::ESP::Hitmarker::Sounds::sound;
 	settings[XORSTR("ESP")][XORSTR("HeadDot")][XORSTR("enabled")] = Settings::ESP::HeadDot::enabled;
+	settings[XORSTR("ESP")][XORSTR("backtrack")][XORSTR("enabled")] = Settings::ESP::backtrack::enabled;
 	settings[XORSTR("ESP")][XORSTR("HeadDot")][XORSTR("size")] = Settings::ESP::HeadDot::size;
 	settings[XORSTR("ESP")][XORSTR("Spread")][XORSTR("enabled")] = Settings::ESP::Spread::enabled;
 	settings[XORSTR("ESP")][XORSTR("Spread")][XORSTR("spreadLimit")] = Settings::ESP::Spread::spreadLimit;
@@ -432,6 +438,8 @@ void Settings::LoadDefaultsOrSave(std::string path)
 	settings[XORSTR("BHop")][XORSTR("Hops")][XORSTR("Min")] = Settings::BHop::Hops::Min;
 
 	settings[XORSTR("NoDuckCooldown")][XORSTR("enabled")] = Settings::NoDuckCooldown::enabled;
+
+	settings[XORSTR("BackTrack")][XORSTR("enabled")] = Settings::LagComp::enabled;
 
 	settings[XORSTR("AutoStrafe")][XORSTR("enabled")] = Settings::AutoStrafe::enabled;
 	settings[XORSTR("AutoStrafe")][XORSTR("type")] = (int) Settings::AutoStrafe::type;
@@ -602,6 +610,7 @@ void Settings::LoadDefaultsOrSave(std::string path)
 	settings[XORSTR("ThirdPerson")][XORSTR("enabled")] = Settings::ThirdPerson::enabled;
 	settings[XORSTR("ThirdPerson")][XORSTR("distance")] = Settings::ThirdPerson::distance;
 	settings[XORSTR("ThirdPerson")][XORSTR("type")] = (int) Settings::ThirdPerson::type;
+	settings[XORSTR("ThirdPerson")][XORSTR("key")] = Settings::ThirdPerson::key;
 
 	settings[XORSTR("JumpThrow")][XORSTR("enabled")] = Settings::JumpThrow::enabled;
 	settings[XORSTR("JumpThrow")][XORSTR("key")] = Util::GetButtonName(Settings::JumpThrow::key);
@@ -737,15 +746,20 @@ void Settings::LoadConfig(std::string path)
 	GetVal(settings[XORSTR("AntiAim")][XORSTR("AutoDisable")][XORSTR("knife_held")], &Settings::AntiAim::AutoDisable::knifeHeld);
 	GetVal(settings[XORSTR("AntiAim")][XORSTR("Yaw")][XORSTR("enabled")], &Settings::AntiAim::Yaw::enabled);
 	GetVal(settings[XORSTR("AntiAim")][XORSTR("Yaw")][XORSTR("type")], (int*)&Settings::AntiAim::Yaw::type);
-	GetVal(settings[XORSTR("AntiAim")][XORSTR("Yaw")][XORSTR("type_fake")], (int*)&Settings::AntiAim::Yaw::typeFake);
+	GetVal(settings[XORSTR("AntiAim")][XORSTR("Yaw")][XORSTR("offset")], (int*)&Settings::AntiAim::Yaw::offset);
+	GetVal(settings[XORSTR("AntiAim")][XORSTR("Fake")][XORSTR("enabled")], &Settings::AntiAim::Fake::enabled);
+	GetVal(settings[XORSTR("AntiAim")][XORSTR("Fake")][XORSTR("type")], (int*)&Settings::AntiAim::Fake::type);
+	GetVal(settings[XORSTR("AntiAim")][XORSTR("RageDesyncFix")][XORSTR("enabled")], &Settings::AntiAim::RageDesyncFix::enabled);
 	GetVal(settings[XORSTR("AntiAim")][XORSTR("Pitch")][XORSTR("enabled")], &Settings::AntiAim::Pitch::enabled);
 	GetVal(settings[XORSTR("AntiAim")][XORSTR("Pitch")][XORSTR("type")], (int*)&Settings::AntiAim::Pitch::type);
 	GetVal(settings[XORSTR("AntiAim")][XORSTR("HeadEdge")][XORSTR("enabled")], &Settings::AntiAim::HeadEdge::enabled);
-	GetVal(settings[XORSTR("AntiAim")][XORSTR("HeadEdge")][XORSTR("distance")], &Settings::AntiAim::HeadEdge::distance);
 	GetVal(settings[XORSTR("AntiAim")][XORSTR("LBYBreaker")][XORSTR("enabled")], &Settings::AntiAim::LBYBreaker::enabled);
 	GetVal(settings[XORSTR("AntiAim")][XORSTR("LBYBreaker")][XORSTR("offset")], &Settings::AntiAim::LBYBreaker::offset);
+	GetVal(settings[XORSTR("AntiAim")][XORSTR("LBYBreaker")][XORSTR("manual")], &Settings::AntiAim::LBYBreaker::manual);
 
 	GetVal(settings[XORSTR("Resolver")][XORSTR("resolve_all")], &Settings::Resolver::resolveAll);
+
+    GetVal(settings[XORSTR("AngleIndicator")][XORSTR("enabled")], &Settings::AngleIndicator::enabled);
 
 	GetVal(settings[XORSTR("Triggerbot")][XORSTR("enabled")], &Settings::Triggerbot::enabled);
 	GetButtonCode(settings[XORSTR("Triggerbot")][XORSTR("key")], &Settings::Triggerbot::key);
@@ -872,6 +886,7 @@ void Settings::LoadConfig(std::string path)
 	GetVal(settings[XORSTR("ESP")][XORSTR("Hitmarker")][XORSTR("Sounds")][XORSTR("enabled")], &Settings::ESP::Hitmarker::Sounds::enabled);
 	GetVal(settings[XORSTR("ESP")][XORSTR("Hitmarker")][XORSTR("Sounds")][XORSTR("sound")], (int*)&Settings::ESP::Hitmarker::Sounds::sound);
 	GetVal(settings[XORSTR("ESP")][XORSTR("HeadDot")][XORSTR("enabled")], &Settings::ESP::HeadDot::enabled);
+	GetVal(settings[XORSTR("ESP")][XORSTR("backtrack")][XORSTR("enabled")], &Settings::ESP::backtrack::enabled);
 	GetVal(settings[XORSTR("ESP")][XORSTR("HeadDot")][XORSTR("size")], &Settings::ESP::HeadDot::size);
 	GetVal(settings[XORSTR("ESP")][XORSTR("Spread")][XORSTR("enabled")], &Settings::ESP::Spread::enabled);
 	GetVal(settings[XORSTR("ESP")][XORSTR("Spread")][XORSTR("spreadLimit")], &Settings::ESP::Spread::spreadLimit);
@@ -946,6 +961,8 @@ void Settings::LoadConfig(std::string path)
 	GetVal(settings[XORSTR("BHop")][XORSTR("Hops")][XORSTR("Min")], &Settings::BHop::Hops::Min);
 
 	GetVal(settings[XORSTR("NoDuckCooldown")][XORSTR("enabled")], &Settings::NoDuckCooldown::enabled);
+
+	GetVal(settings[XORSTR("BackTrack")][XORSTR("enabled")], &Settings::LagComp::enabled);
 
 	GetVal(settings[XORSTR("AutoStrafe")][XORSTR("enabled")], &Settings::AutoStrafe::enabled);
 	GetVal(settings[XORSTR("AutoStrafe")][XORSTR("type")], (int*)& Settings::AutoStrafe::type);

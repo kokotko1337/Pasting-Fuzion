@@ -5,6 +5,7 @@
 
 #include "../Hacks/bhop.h"
 #include "../Hacks/noduckcooldown.h"
+#include "../Hacks/lagcomp.h"
 #include "../Hacks/autostrafe.h"
 #include "../Hacks/showranks.h"
 #include "../Hacks/autodefuse.h"
@@ -56,9 +57,10 @@ bool Hooks::CreateMove(void* thisptr, float flInputSampleTime, CUserCmd* cmd)
 			Aimbot::CreateMove(cmd);
 			Triggerbot::CreateMove(cmd);
 			AutoKnife::CreateMove(cmd);
-            AntiAim::CreateMove(cmd);
 			Airstuck::CreateMove(cmd);
+			LagComp::CreateMove(cmd);
 			FakeLag::CreateMove(cmd);
+			AntiAim::CreateMove(cmd);
 			ESP::CreateMove(cmd);
 			TracerEffect::CreateMove(cmd);
 		PredictionSystem::EndPrediction();

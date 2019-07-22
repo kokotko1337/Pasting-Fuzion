@@ -232,6 +232,7 @@ void Misc::RenderTab()
 				ImGui::SliderFloat(XORSTR("##TPCAMOFFSET"), &Settings::ThirdPerson::distance, 0.f, 500.f, XORSTR("Camera Offset: %0.f"));
                 ImGui::Combo(XORSTR("Showed Angle"), (int*)& Settings::ThirdPerson::type, angleTypes, IM_ARRAYSIZE(angleTypes));
 				ImGui::PopItemWidth();
+				UI::KeyBindButton(&Settings::ThirdPerson::key);
 			}
 			ImGui::Columns(1);
 			ImGui::Separator();
@@ -435,6 +436,7 @@ void Misc::RenderTab()
 				ImGui::Checkbox(XORSTR("Sniper Crosshair"), &Settings::SniperCrosshair::enabled);
 				ImGui::Checkbox(XORSTR("Disable post-processing"), &Settings::DisablePostProcessing::enabled);
 				ImGui::Checkbox(XORSTR("No Duck Cooldown"), &Settings::NoDuckCooldown::enabled);
+				ImGui::Checkbox(XORSTR("BackTrack"), &Settings::LagComp::enabled);
 			}
 			ImGui::NextColumn();
 			{

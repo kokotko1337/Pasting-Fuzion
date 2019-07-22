@@ -1,5 +1,6 @@
 #include "aimbot.h"
 #include "autowall.h"
+#include "fakelag.h"
 
 #include "../Utils/xorstring.h"
 #include "../Utils/math.h"
@@ -68,6 +69,7 @@ std::vector<long> killTimes = { 0 }; // the Epoch time from when we kill someone
 bool shouldAim;
 QAngle AimStepLastAngle;
 QAngle RCSLastPunch;
+C_BasePlayer* Aimbot::curtarget;
 
 int Aimbot::targetAimbot = -1;
 const int headVectors = 11;
@@ -575,6 +577,20 @@ static void AutoCrouch(C_BasePlayer* player, CUserCmd* cmd)
 	cmd->buttons |= IN_BULLRUSH | IN_DUCK;
 }
 
+static void LagSpike(C_BasePlayer* player, CUserCmd* cmd)
+{
+    if (!Settings::FakeLag::enabled && !Settings::FakeLag::adaptive)
+        return;
+
+    if (!player)
+    {
+        FakeLag::lagSpike = false;
+        return;
+    }
+
+    FakeLag::lagSpike = true;
+}
+
 static void AutoSlow(C_BasePlayer* player, float& forward, float& sideMove, float& bestDamage, C_BaseCombatWeapon* active_weapon, CUserCmd* cmd)
 {
 
@@ -756,6 +772,10 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 	Vector localEye = localplayer->GetEyePosition();
 
 	shouldAim = Settings::Aimbot::AutoShoot::enabled;
+    Vector bestSpot = {0,0,0};
+	float bestDamage = 0.0f;
+	C_BasePlayer* player = GetClosestPlayerAndSpot(cmd, !Settings::Aimbot::AutoWall::enabled, &bestSpot, &bestDamage);
+	Aimbot::curtarget = player;
 
 	if (Settings::Aimbot::IgnoreJump::enabled && (!(localplayer->GetFlags() & FL_ONGROUND) && localplayer->GetMoveType() != MOVETYPE_LADDER))
 		return;
@@ -773,10 +793,6 @@ void Aimbot::CreateMove(CUserCmd* cmd)
 		if (Util::Items::IsScopeable(*activeWeapon->GetItemDefinitionIndex()) && !localplayer->IsScoped())
 			return;
 	}
-
-    Vector bestSpot = {0,0,0};
-	float bestDamage = 0.0f;
-	C_BasePlayer* player = GetClosestPlayerAndSpot(cmd, !Settings::Aimbot::AutoWall::enabled, &bestSpot, &bestDamage);
 
 	if (player)
 	{

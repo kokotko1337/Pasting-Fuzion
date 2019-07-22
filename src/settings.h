@@ -151,13 +151,38 @@ enum class ShowedAngle : int
     FAKE,
 };
 
-enum class AntiAimType_Y : int
+enum class AntiAimYaw_Real : int
 {
-	NONE,
-    MAX_DELTA_LEFT,
-	MAX_DELTA_RIGHT,
-    MAX_DELTA_FLIPPER,
-    MAX_DELTA_LBY_AVOID,
+	SPIN_SLOW,
+	SPIN_FAST,
+	JITTER,
+	BACKJITTER,
+	SIDE,
+	BACKWARDS,
+	FORWARDS,
+	LEFT,
+	RIGHT,
+	STATICAA,
+	STATICJITTER,
+	STATICSMALLJITTER,
+	FOLLOW,
+	CASUAL,
+	LISP,
+	LISP_SIDE,
+	LISP_JITTER,
+	ANGEL_BACKWARD,
+	ANGEL_INVERSE,
+	ANGEL_SPIN,
+	LOWERBODY,
+	LBYONGROUND,
+};
+
+enum class AntiAimYaw_Fake: int
+{
+	STATIC_LEFT,
+	STATIC_RIGHT,
+	JITTER,
+	MANUAL
 };
 
 enum class AntiAimType_X : int
@@ -560,9 +585,20 @@ namespace Settings
         namespace Yaw
         {
             extern bool enabled;
-            extern AntiAimType_Y type;
-            extern AntiAimType_Y typeFake;
+            extern AntiAimYaw_Real type;
+            extern float offset;
         }
+
+		namespace Fake
+		{
+			extern bool enabled;
+			extern AntiAimYaw_Fake type;
+		}
+		
+		namespace RageDesyncFix
+		{
+			extern bool enabled;
+		}
 
         namespace Pitch
         {
@@ -573,12 +609,12 @@ namespace Settings
         namespace HeadEdge
         {
             extern bool enabled;
-            extern float distance;
         }
         namespace LBYBreaker
         {
             extern bool enabled;
             extern float offset;
+            extern bool manual;
         }
     }
 
@@ -776,6 +812,11 @@ namespace Settings
 			extern bool enabled;
 			extern float size;
 		}
+		
+		namespace backtrack
+		{
+			extern bool enabled;
+		}
 
 		namespace Spread
 		{
@@ -892,6 +933,11 @@ namespace Settings
 	}
 
 	namespace NoDuckCooldown
+	{
+		extern bool enabled;
+	}
+
+	namespace LagComp
 	{
 		extern bool enabled;
 	}
@@ -1091,6 +1137,7 @@ namespace Settings
 		extern bool enabled;
 		extern float distance;
         extern ShowedAngle type;
+        extern ButtonCode_t key;
 	}
 
 	namespace JumpThrow
