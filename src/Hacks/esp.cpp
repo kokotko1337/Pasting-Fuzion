@@ -633,7 +633,7 @@ static void DrawBulletTrace( C_BasePlayer* player ) {
 		return;
 
 	Draw::AddLine( src.x, src.y, dst.x, dst.y, ESP::GetESPPlayerColor( player, true ) );
-	Draw::AddRectFilled( ( int ) ( dst.x - 3 ), ( int ) ( dst.y - 3 ), 6, 6, ESP::GetESPPlayerColor( player, false ) );
+	// Draw::AddRectFilled( ( int ) ( dst.x - 3 ), ( int ) ( dst.y - 3 ), 6, 6, ESP::GetESPPlayerColor( player, false ) ); // do we really need this? it's not drawing in valve and buggy in imgui
 }
 static void DrawAATrace( QAngle fake, QAngle actual ) {
 	C_BasePlayer* localPlayer = ( C_BasePlayer* ) entityList->GetClientEntity( engine->GetLocalPlayer() );
@@ -661,7 +661,7 @@ static void DrawAATrace( QAngle fake, QAngle actual ) {
 
 	color = ImColor( 135, 235, 169 );
 	Draw::AddLine( src.x, src.y, dst.x, dst.y, color );
-	Draw::AddRectFilled( ( int ) ( dst.x - 3 ), ( int ) ( dst.y - 3 ), 6, 6, color );
+	// Draw::AddRectFilled( ( int ) ( dst.x - 3 ), ( int ) ( dst.y - 3 ), 6, 6, color );
 	string = XORSTR("LBY");
 	nameSize = Draw::GetTextSize( string, esp_font );
 	Draw::AddText(dst.x, dst.y, string, color );
@@ -680,7 +680,7 @@ static void DrawAATrace( QAngle fake, QAngle actual ) {
 
 	color = ImColor( 5, 200, 5 );
 	Draw::AddLine( src.x, src.y, dst.x, dst.y, color );
-	Draw::AddRectFilled( ( int ) ( dst.x - 3 ), ( int ) ( dst.y - 3 ), 6, 6, color );
+	// Draw::AddRectFilled( ( int ) ( dst.x - 3 ), ( int ) ( dst.y - 3 ), 6, 6, color );
 	string = XORSTR("FAKE");
 	nameSize = Draw::GetTextSize( string, esp_font );
 	Draw::AddText(dst.x, dst.y, string, color );
@@ -699,7 +699,7 @@ static void DrawAATrace( QAngle fake, QAngle actual ) {
 
 	color = ImColor( 225, 5, 5 );
 	Draw::AddLine( src.x, src.y, dst.x, dst.y, color );
-	Draw::AddRectFilled( ( int ) ( dst.x - 3 ), ( int ) ( dst.y - 3 ), 6, 6, color );
+	// Draw::AddRectFilled( ( int ) ( dst.x - 3 ), ( int ) ( dst.y - 3 ), 6, 6, color );
 	string = XORSTR("REAL");
 	nameSize = Draw::GetTextSize( string, esp_font );
 	Draw::AddText(dst.x, dst.y, string, color );
@@ -718,7 +718,7 @@ static void DrawAATrace( QAngle fake, QAngle actual ) {
 
 	color = ImColor( 225, 225, 80 );
 	Draw::AddLine( src.x, src.y, dst.x, dst.y, color );
-	Draw::AddRectFilled( ( int ) ( dst.x - 3 ), ( int ) ( dst.y - 3 ), 6, 6, color );
+	// Draw::AddRectFilled( ( int ) ( dst.x - 3 ), ( int ) ( dst.y - 3 ), 6, 6, color );
 	string = XORSTR("FEET");
 	nameSize = Draw::GetTextSize( string, esp_font );
 	Draw::AddText(dst.x, dst.y, string, color );
