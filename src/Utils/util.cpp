@@ -193,8 +193,8 @@ const std::map<int,int> * Util::GetModelTypeBoneMap(C_BasePlayer* player)
 				return &BoneMapCT_SAS;
 			}
 		default:
-			cvar->ConsoleDPrintf(XORSTR( "(Util::GetModelTypeBoneMap)- Warning. Model type \"%s\" Unknown. Using Generic boneMap\n" ), pStudioModel->name );
-			return &BoneMapGeneric;
+			cvar->ConsoleDPrintf(XORSTR( "(Util::GetModelTypeBoneMap)- Warning. Model type \"%s\" Unknown. Using Generic boneMap. id(%d) @(%p)\n" ),
+								pStudioModel->name, pStudioModel->id, (void*)pStudioModel );
 	}
 }
 
