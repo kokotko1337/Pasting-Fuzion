@@ -8,7 +8,8 @@ namespace Hooks
 {
 	/* Client */
 	void FrameStageNotify(void* thisptr, ClientFrameStage_t stage);
-
+	 void LevelInitPostEntity(); 
+	
 	/* ClientMode */
 	void OverrideView(void* thisptr, CViewSetup* pSetup);
 	bool CreateMove(void* thisptr, float flInputSampleTime, CUserCmd* cmd);
