@@ -10,18 +10,18 @@ static float GetHitgroupDamageMultiplier(HitGroups iHitGroup)
 	switch (iHitGroup)
 	{
 		case HitGroups::HITGROUP_HEAD:
-			return 4.0f;
+			return 100.0f;
 		case HitGroups::HITGROUP_CHEST:
 		case HitGroups::HITGROUP_LEFTARM:
 		case HitGroups::HITGROUP_RIGHTARM:
-			return 1.0f;
+			return 30.0f;
 		case HitGroups::HITGROUP_STOMACH:
-			return 1.25f;
+			return 50.0f;
 		case HitGroups::HITGROUP_LEFTLEG:
 		case HitGroups::HITGROUP_RIGHTLEG:
-			return 0.75f;
+			return 20.0f;
 		default:
-			return 1.0f;
+			return 30.0f;
 	}
 }
 
