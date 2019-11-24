@@ -141,8 +141,14 @@ void SplitSkins()
 	{
 		if (!(Util::Contains(Util::ToLower(std::string(filterModelsT)), Util::ToLower(Util::Items::GetItemDisplayName(model.first))) || Util::Contains(Util::ToLower(std::string(filterModelsT)), Util::ToLower(Util::Items::GetItemEntityName(model.first)))))
 			continue;
-		if (model.first == ItemDefinitionIndex::INVALID || Util::Items::IsUtility(model.first) || model.first == ItemDefinitionIndex::GLOVE_CT_SIDE || model.first == ItemDefinitionIndex::GLOVE_T_SIDE || Util::Items::IsCTWeapon(model.first) || model.first == ItemDefinitionIndex::WEAPON_KNIFE || model.first == ItemDefinitionIndex::WEAPON_KNIFE_T)
-			continue;
+				if (model.first == ItemDefinitionIndex::INVALID
+			|| Util::Items::IsUtility(model.first)
+			|| model.first == ItemDefinitionIndex::GLOVE_CT_SIDE
+			|| model.first == ItemDefinitionIndex::GLOVE_T_SIDE
+			|| Util::Items::IsCTWeapon(model.first)
+			|| model.first == ItemDefinitionIndex::WEAPON_KNIFE
+			|| model.first == ItemDefinitionIndex::WEAPON_KNIFE_T)
+					continue;
 		const bool item_selected = ((int) model.first == modelT);
 		ImGui::PushID((int) model.first);
 		if (ImGui::Selectable(Util::Items::GetItemDisplayName(model.first).c_str(), item_selected, ImGuiSelectableFlags_SpanAllColumns))
