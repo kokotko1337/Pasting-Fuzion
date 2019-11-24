@@ -1,5 +1,5 @@
 #include "aimbot.h"
-#include "autowall.h"
+#include "autowall.cpp"
 #include "fakelag.h"
 
 #include "../Utils/xorstring.h"
