@@ -92,7 +92,7 @@ void RegisterTick()
             entity->GetImmune())
             continue;
 
-        LagComp::BacktrackRecord record = LagComp::BacktrackRecord{entity, entity->GetBonePosition((int)Bone::BONE_HEAD), entity->GetVecOrigin()};
+        LagComp::BacktrackRecord record = LagComp::BacktrackRecord{entity, entity->GetBonePosition(BONE_HEAD ), entity->GetVecOrigin()};
 
 /*        *(int*)((uintptr_t)record.entity + 0xA30) = globalVars->framecount; // getting some weird stretch of model pls send halp
         *(int*)((uintptr_t)record.entity + 0xA28) = 0;*/
