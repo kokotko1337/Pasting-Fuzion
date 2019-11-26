@@ -4,24 +4,25 @@
 #include "../Utils/math.h"
 #include "../Utils/entity.h"
 #include "../interfaces.h"
+#include "../SDK/definitions.h"
 
 static float GetHitgroupDamageMultiplier(HitGroups iHitGroup)
 {
 	switch (iHitGroup)
 	{
 		case HitGroups::HITGROUP_HEAD:
-			return 100.0f;
+			return 4.0f;
 		case HitGroups::HITGROUP_CHEST:
 		case HitGroups::HITGROUP_LEFTARM:
 		case HitGroups::HITGROUP_RIGHTARM:
-			return 30.0f;
+			return 1.0f;
 		case HitGroups::HITGROUP_STOMACH:
-			return 50.0f;
+			return 1.25f;
 		case HitGroups::HITGROUP_LEFTLEG:
 		case HitGroups::HITGROUP_RIGHTLEG:
-			return 20.0f;
+			return 0.75f;
 		default:
-			return 30.0f;
+			return 1.0f;
 	}
 }
 
