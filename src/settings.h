@@ -1059,7 +1059,12 @@ namespace Settings
 		extern bool enabled;
 		extern ClanTagType type;
 	}
-
+	
+	namespace FakeVote
+	{
+		extern char message[128];
+	}
+	
 	namespace View
 	{
 		namespace NoAimPunch
@@ -1209,10 +1214,17 @@ namespace Settings
  			extern bool allies;
  		}
  	}
+    
+    namespace QuickSwitch
+	{
+		extern bool enabled;
+	}
+
 	namespace AngleIndicator
 	{
 		extern bool enabled;
 	}
+	
     namespace Debug
     {
         namespace AutoWall
