@@ -421,6 +421,21 @@ void Misc::RenderTab()
 			{
 				ImGui::Combo("", &Settings::NameStealer::team, teams, IM_ARRAYSIZE(teams));
 			}
+			
+            ImGui::Columns(1);
+			ImGui::Separator();
+			ImGui::Text(XORSTR("FakeVote"));
+			ImGui::Separator();
+			ImGui::Columns(2, nullptr, true);
+			{
+				ImGui::Text(XORSTR("Message"));
+			}
+			ImGui::NextColumn();
+			{
+				ImGui::PushItemWidth(-1);
+				ImGui::InputText(XORSTR("##FAKEVOTEMSG"), Settings::FakeVote::message, 128);
+				ImGui::PopItemWidth();
+			}
 
 			ImGui::Columns(1);
 			ImGui::Separator();
@@ -452,6 +467,7 @@ void Misc::RenderTab()
 				UI::KeyBindButton(&Settings::JumpThrow::key);
 				ImGui::Checkbox(XORSTR("Silent Defuse"), &Settings::AutoDefuse::silent);
 				ImGui::Checkbox(XORSTR("Attempt NoFall"), &Settings::NoFall::enabled);
+                ImGui::Checkbox(XORSTR("AWP Quick Switch"), &Settings::QuickSwitch::enabled);
 			}
 			ImGui::Columns(1);
 			ImGui::Separator();
