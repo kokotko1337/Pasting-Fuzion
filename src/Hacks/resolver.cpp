@@ -1,6 +1,14 @@
 #include "resolver.h"
 
+#include "../Utils/xorstring.h"
+#include "../Utils/entity.h"
+#include "../settings.h"
+#include "../interfaces.h"
+#include "antiaim.h"
+
 bool Settings::Resolver::resolveAll = false;
+std::vector<int64_t> Resolver::Players = { };
+
 std::vector<std::pair<C_BasePlayer*, QAngle>> player_data;
 
 void Resolver::FrameStageNotify(ClientFrameStage_t stage)
@@ -11,8 +19,6 @@ void Resolver::FrameStageNotify(ClientFrameStage_t stage)
 	C_BasePlayer* localplayer = (C_BasePlayer*) entityList->GetClientEntity(engine->GetLocalPlayer());
 	if (!localplayer)
 		return;
-
-	static std::array<int, 64> oldMissedShots = { 0 };
 
 	if (stage == ClientFrameStage_t::FRAME_NET_UPDATE_POSTDATAUPDATE_START)
 	{
@@ -25,41 +31,21 @@ void Resolver::FrameStageNotify(ClientFrameStage_t stage)
 				|| player->GetDormant()
 				|| !player->GetAlive()
 				|| player->GetImmune()
-				|| player->GetTeam() == localplayer->GetTeam())
+				|| Entity::IsTeamMate(player, localplayer))
 				continue;
 
-			CCSGOAnimState* animState = player->GetAnimState();
-			if (!animState)
-				continue;
+			IEngineClient::player_info_t entityInformation;
+			engine->GetPlayerInfo(i, &entityInformation);
 
-			float maxDelta = AntiAim::GetMaxDelta(animState);
-
-			int missedShot = LogShots::missedShots[player->GetIndex() - 1];
-			int oldMissedShot = oldMissedShots[player->GetIndex() - 1];
-
-			if (missedShot <= oldMissedShot)
+			if (!Settings::Resolver::resolveAll && std::find(Resolver::Players.begin(), Resolver::Players.end(), entityInformation.xuid) == Resolver::Players.end())
 				continue;
 
 			player_data.push_back(std::pair<C_BasePlayer*, QAngle>(player, *player->GetEyeAngles()));
 
-			switch (missedShot % 5)
-			{
-                case 0:
-                    player->GetEyeAngles()->y -= 0;
-                    break;
-				case 1:
-					player->GetEyeAngles()->y -= maxDelta;
-					break;
-				case 2:
-					player->GetEyeAngles()->y += maxDelta;
-					break;
-				case 3:
-					player->GetEyeAngles()->y -= maxDelta / 2;
-					break;
-				case 4:
-					player->GetEyeAngles()->y += maxDelta / 2;
-					break;
-			}
+			//player->GetEyeAngles()->y = *player->GetLowerBodyYawTarget();
+			player->GetEyeAngles()->y = (rand() % 2) ?
+                                        player->GetEyeAngles()->y + (AntiAim::GetMaxDelta(player->GetAnimState()) * 0.66f) :
+                                        player->GetEyeAngles()->y - (AntiAim::GetMaxDelta(player->GetAnimState()) * 0.66f);
 		}
 	}
 	else if (stage == ClientFrameStage_t::FRAME_RENDER_END)
@@ -70,12 +56,24 @@ void Resolver::FrameStageNotify(ClientFrameStage_t stage)
 			*player_aa_data.first->GetEyeAngles() = player_aa_data.second;
 		}
 
-		oldMissedShots = LogShots::missedShots;
-
 		player_data.clear();
 	}
 }
 
 void Resolver::PostFrameStageNotify(ClientFrameStage_t stage)
 {
+}
+
+void Resolver::FireGameEvent(IGameEvent* event)
+{
+	if (!event)
+		return;
+
+	if (strcmp(event->GetName(), XORSTR("player_connect_full")) != 0 && strcmp(event->GetName(), XORSTR("cs_game_disconnected")) != 0)
+		return;
+
+	if (event->GetInt(XORSTR("userid")) && engine->GetPlayerForUserID(event->GetInt(XORSTR("userid"))) != engine->GetLocalPlayer())
+		return;
+
+	Resolver::Players.clear();
 }
